@@ -129,7 +129,6 @@ function initGame() {
 }
 
 function renderKeyboard() {
-  console.log("Rendering keyboard");
   keyboardEl.innerHTML = "";
   const rows = ["QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM"];
 
@@ -219,7 +218,6 @@ function provideFeedback() {
 
   const currentRowIndex = attempts;
   if (currentRowIndex < 0 || currentRowIndex >= guessRows.length) {
-    console.error("Invalid attempt index.");
     return;
   }
 
