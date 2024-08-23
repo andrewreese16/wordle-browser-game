@@ -84,3 +84,7 @@ body {
 .message-success {
   color: green;
 }
+
+.key-small-text {
+  font-size: 12px;
+}

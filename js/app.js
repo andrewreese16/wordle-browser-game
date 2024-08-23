@@ -12,6 +12,105 @@ const validWords = [
   "GREAT",
   "WHICH",
   "APPLY",
+  "ROUTE",
+  "CRASH",
+  "CLOWN",
+  "SHAKY",
+  "VEGAN",
+  "POWER",
+  "TRUST",
+  "ENJOY",
+  "CHIEF",
+  "EXIST",
+  "QUIET",
+  "EXTRA",
+  "AMONG",
+  "ALBUM",
+  "DEBUT",
+  "DOUBT",
+  "ABOUT",
+  "ALERT",
+  "ARGUE",
+  "BEACH",
+  "BEGAN",
+  "BEGIN",
+  "BEGUN",
+  "AUDIO",
+  "AUDIT",
+  "AWARD",
+  "BIRTH",
+  "BADLY",
+  "BASIC",
+  "BOOST",
+  "BUYER",
+  "CIVIL",
+  "CURVE",
+  "CYCLE",
+  "DEALT",
+  "EQUAL",
+  "EVERY",
+  "FIFTY",
+  "FIFTH",
+  "FLUID",
+  "FOCUS",
+  "JUICE",
+  "JOINT",
+  "KNOWN",
+  "MEDIA",
+  "MIXED",
+  "LAUGH",
+  "LUNCH",
+  "LEAST",
+  "LEGAL",
+  "LIMIT",
+  "PHASE",
+  "PLAIN",
+  "SIZED",
+  "USAGE",
+  "VIRUS",
+  "YOUTH",
+  "YIELD",
+  "WHOSE",
+  "WRITE",
+  "UNTIL",
+  "THREW",
+  "TRULY",
+  "TREND",
+  "TOUGH",
+  "TOUCH",
+  "SUITE",
+  "TAXES",
+  "SUGAR",
+  "TIRED",
+  "PROVE",
+  "RIVAL",
+  "SEVEN",
+  "PRIZE",
+  "SCENE",
+  "ROUGH",
+  "PRIOR",
+  "RATIO",
+  "PHOTO",
+  "PANEL",
+  "MOVIE",
+  "OUGHT",
+  "OFTEN",
+  "OCEAN",
+  "MINUS",
+  "INDEX",
+  "HUMAN",
+  "HOUSE",
+  "GLOBE",
+  "NEWLY",
+  "IRONY",
+  "GIANT",
+  "ENEMY",
+  "EMPTY",
+  "SENSE",
+  "MOUNT",
+  "NOVEL",
+  "VALUE",
+  "ZEBRA",
 ];
 
 /*---------------------------- Variables (state) ----------------------------*/
@@ -53,13 +152,13 @@ function renderKeyboard() {
   specialKeysRow.className = "key-row";
 
   const enterKey = document.createElement("div");
-  enterKey.className = "key";
+  enterKey.className = "key key-small-text";
   enterKey.textContent = "Enter";
   enterKey.addEventListener("click", () => handleKeyClick("Enter"));
   specialKeysRow.appendChild(enterKey);
 
   const backspaceKey = document.createElement("div");
-  backspaceKey.className = "key";
+  backspaceKey.className = "key key-small-text";
   backspaceKey.textContent = "Back";
   backspaceKey.addEventListener("click", () => handleKeyClick("Back"));
   specialKeysRow.appendChild(backspaceKey);
@@ -79,7 +178,6 @@ function renderBoard() {
     }
     gameBoardEl.appendChild(row);
   }
-  console.log(`Rendered ${maxAttempts} rows`);
 }
 
 function handleKeyClick(letter) {
@@ -90,9 +188,8 @@ function handleKeyClick(letter) {
       displayMessage("Please enter a complete guess.");
     }
   } else if (letter === "Back") {
-    // Remove the last character from currentGuess
     currentGuess = currentGuess.slice(0, -1);
-    // Update the board to reflect the change
+
     updateBoard();
   } else if (currentGuess.length < wordLength) {
     currentGuess += letter;
@@ -131,10 +228,6 @@ function displayMessage(message, isError = false) {
 function provideFeedback() {
   const guessRows = document.querySelectorAll(".guess-row");
 
-  // Debugging logs
-  console.log(`Number of guess rows: ${guessRows.length}`);
-  console.log(`Current attempt index: ${attempts}`);
-
   const currentRowIndex = attempts;
   if (currentRowIndex < 0 || currentRowIndex >= guessRows.length) {
     console.error("Invalid attempt index.");
@@ -163,8 +256,6 @@ function provideFeedback() {
 }
 
 function checkGuess() {
-  console.log(`Attempt before increment: ${attempts}`);
-
   if (currentGuess.length !== wordLength) {
     displayMessage("Please enter a complete guess.", true);
     return;
@@ -177,21 +268,16 @@ function checkGuess() {
     return;
   }
 
-  provideFeedback(); // Provide feedback for the current guess
+  provideFeedback();
 
-  // Increment attempts only if feedback is provided
   attempts++;
   currentGuess = "";
 
-  console.log(`Attempt after increment: ${attempts}`);
-
-  // Check for game over condition
   if (attempts >= maxAttempts) {
     displayMessage(`Game Over! The correct word was ${selectedWord}`, true);
     return;
   }
 
-  // Update the board for the next guess
   updateBoard();
 }
 
