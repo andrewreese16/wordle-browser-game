@@ -155,11 +155,6 @@ function initGame() {
   renderBoard();
 }
 
-function initGame() {
-  renderKeyboard();
-  renderBoard();
-}
-
 function renderKeyboard() {
   console.log("Rendering keyboard");
   keyboardEl.innerHTML = "";
