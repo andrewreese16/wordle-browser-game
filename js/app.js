@@ -235,17 +235,6 @@ function updateBoard() {
   }
 }
 
-function updateBoard() {
-  const guessRows = document.querySelectorAll(".guess-row");
-  const currentRow = guessRows[attempts];
-  if (currentRow) {
-    const tiles = currentRow.querySelectorAll(".guess-tile");
-    for (let i = 0; i < wordLength; i++) {
-      tiles[i].textContent = currentGuess[i] || "";
-    }
-  }
-}
-
 function displayMessage(message, isError = false) {
   const messageContainer = document.querySelector("#message-container");
   messageContainer.textContent = message;
