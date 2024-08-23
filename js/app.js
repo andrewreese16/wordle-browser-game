@@ -257,6 +257,22 @@ function checkGuess() {
 
   provideFeedback();
 
+  const guessRows = document.querySelectorAll(".guess-row");
+  const currentRow = guessRows[attempts];
+  const tiles = currentRow.querySelectorAll(".guess-tile");
+  let isWin = true;
+
+  tiles.forEach((tile, index) => {
+    if (currentGuess[index] !== selectedWord[index]) {
+      isWin = false;
+    }
+  });
+
+  if (isWin) {
+    displayMessage("Congratulations! You've guessed the word!", false);
+    return;
+  }
+
   attempts++;
   currentGuess = "";
 
