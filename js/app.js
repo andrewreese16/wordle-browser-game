@@ -123,19 +123,6 @@ const gameBoardEl = document.querySelector("#game-board");
 const startNewGameBtn = document.querySelector("#startNewGameBtn");
 
 /*-------------------------------- Functions --------------------------------*/
-function toggleDarkMode() {
-  document.body.classList.toggle("dark-mode");
-  if (document.body.classList.contains("dark-mode")) {
-    localStorage.setItem("theme", "dark");
-  } else {
-    localStorage.setItem("theme", "light");
-  }
-}
-
-document
-  .querySelector("#toggle-theme")
-  .addEventListener("click", toggleDarkMode);
-
 function initGame() {
   renderKeyboard();
   renderBoard();
