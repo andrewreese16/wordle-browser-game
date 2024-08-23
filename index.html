@@ -8,8 +8,17 @@
     <title>Wordle</title>
   </head>
   <body>
+    <button id="toggle-theme">Toggle Dark Mode</button>
     <h1>Welcome to Wordle</h1>
-    <h3></h3>
+    <h3>The rules of the game</h3>
+    <ul>
+      <li>You have 6 tries to guess the word</li>
+      <li>A correct letter turns green.</li>
+      <li>A correct letter in the wrong place turns yellow.</li>
+      <li>An incorrect letter turns gray</li>
+      <li>Letters can be used more than once.</li>
+      <li>Every word you enter must be in the word list.</li>
+    </ul>
     <div id="container">
       <div id="game-board"></div>
 
@@ -18,11 +27,11 @@
           <div class="key">Enter</div>
         </div>
         <div class="key-row">
-            <div class="key">Backspace</div>
+          <div class="key">Backspace</div>
         </div>
       </div>
       <div id="message-container"></div>
-      <button onclick="startNewGame()">Start New Game</button>
+      <button id="startNewGameBtn">Start New Game</button>
     </div>
   </body>
 </html>

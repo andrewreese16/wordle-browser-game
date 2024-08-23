@@ -1,6 +1,5 @@
-/*-------------------------------- Constants --------------------------------*/
 const wordLength = 5;
-const maxAttempts = 5;
+const maxAttempts = 6;
 const validWords = [
   "LEARN",
   "APPLE",
@@ -121,8 +120,41 @@ let selectedWord = validWords[Math.floor(Math.random() * validWords.length)];
 /*------------------------ Cached Element References ------------------------*/
 const keyboardEl = document.querySelector("#keyboard");
 const gameBoardEl = document.querySelector("#game-board");
+const startNewGameBtn = document.querySelector("#startNewGameBtn");
 
 /*-------------------------------- Functions --------------------------------*/
+function toggleDarkMode() {
+  document.body.classList.toggle("dark-mode");
+}
+
+document
+  .querySelector("#toggle-theme")
+  .addEventListener("click", toggleDarkMode);
+
+document.addEventListener("DOMContentLoaded", () => {
+  if (localStorage.getItem("theme") === "dark") {
+    document.body.classList.add("dark-mode");
+  }
+});
+
+function toggleDarkMode() {
+  document.body.classList.toggle("dark-mode");
+  if (document.body.classList.contains("dark-mode")) {
+    localStorage.setItem("theme", "dark");
+  } else {
+    localStorage.setItem("theme", "light");
+  }
+}
+
+document
+  .querySelector("#toggle-theme")
+  .addEventListener("click", toggleDarkMode);
+
+function initGame() {
+  renderKeyboard();
+  renderBoard();
+}
+
 function initGame() {
   renderKeyboard();
   renderBoard();
@@ -289,5 +321,7 @@ function startNewGame() {
   renderKeyboard();
   displayMessage("");
 }
+
+startNewGameBtn.addEventListener("click", startNewGame);
 
 initGame();

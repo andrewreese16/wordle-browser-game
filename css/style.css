@@ -1,3 +1,4 @@
+/* Light mode styles (default) */
 body {
   font-family: Arial, sans-serif;
   display: flex;
@@ -7,6 +8,7 @@ body {
   min-height: 100vh;
   margin: 0;
   background-color: #f0f0f0;
+  color: #333;
 }
 
 #container {
@@ -87,4 +89,28 @@ body {
 
 .key-small-text {
   font-size: 12px;
+}
+
+/* Dark mode styles */
+body.dark-mode {
+  background-color: #333;
+  color: #f0f0f0;
+}
+
+body.dark-mode .guess-tile {
+  background-color: #555;
+  border: 1px solid #444;
+}
+
+body.dark-mode .key {
+  background-color: #666;
+  border: 1px solid #555;
+}
+
+body.dark-mode .key:hover {
+  background-color: #555;
+}
+
+body.dark-mode #message-container {
+  color: #f0f0f0;
 }
