@@ -410,7 +410,6 @@ let selectedWord = validWords[Math.floor(Math.random() * validWords.length)];
 const keyboardEl = document.querySelector("#keyboard");
 const gameBoardEl = document.querySelector("#game-board");
 const startNewGameBtn = document.querySelector("#startNewGameBtn");
-
 /*-------------------------------- Functions --------------------------------*/
 function initGame() {
   renderKeyboard();

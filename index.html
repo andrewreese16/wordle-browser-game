@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script defer src="./js/app.js"></script>
-    <script type="module" defer src="./js/wordList.js"></script>
     <link rel="stylesheet" href="./css/style.css" />
     <title>Wordle</title>
   </head>
@@ -19,6 +18,7 @@
       <li>Letters can be used more than once.</li>
       <li>Every word you enter must be in the word list.</li>
     </ul>
+    <div id="message-container"></div>
     <div id="container">
       <div id="game-board"></div>
       <div id="keyboard">
@@ -29,7 +29,6 @@
           <div class="key">Backspace</div>
         </div>
       </div>
-      <div id="message-container"></div>
       <button id="startNewGameBtn">Start New Game</button>
     </div>
   </body>
