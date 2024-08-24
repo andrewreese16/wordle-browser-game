@@ -1,7 +1,6 @@
 /*---------------------------- Constants ----------------------------*/
 const wordLength = 5;
 const maxAttempts = 6;
-// const validWords = require("./data.js");
 /*---------------------------- Variables (state) ----------------------------*/
 let currentGuess = "";
 let attempts = 0;
@@ -15,7 +14,6 @@ const startNewGameBtn = document.querySelector("#startNewGameBtn");
 function initGame() {
   renderKeyboard();
   renderBoard();
-  console.log(selectedWord);
 }
 
 function renderKeyboard() {
