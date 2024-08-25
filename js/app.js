@@ -1,67 +1,68 @@
 /*---------------------------- Constants ----------------------------*/
 const wordLength = 5;
-const maxAttempts = 6;
+const numOfAttempts = 6;
 /*---------------------------- Variables (state) ----------------------------*/
 let currentGuess = "";
 let attempts = 0;
-let selectedWord = validWords[Math.floor(Math.random() * validWords.length)];
+let currentSelectedWord =
+  validWords[Math.floor(Math.random() * validWords.length)];
+/*---------------------------- Cached Elements ----------------------------*/
+const keyBoardEl = document.querySelector("#on-screen-keyboard");
+const gameBoardEl = document.querySelector("#wordle-game-board");
+const startNewGameBtn = document.querySelector("#start-new-game-btn");
+const darkModeToggle = document.getElementById("dark-mode-toggle");
 
-/*------------------------ Cached Element References ------------------------*/
-const keyboardEl = document.querySelector("#keyboard");
-const gameBoardEl = document.querySelector("#game-board");
-const startNewGameBtn = document.querySelector("#startNewGameBtn");
-/*-------------------------------- Functions --------------------------------*/
-function initGame() {
-  renderKeyboard();
+/*---------------------------- Functions ----------------------------*/
+function init() {
+  renderkeyboard();
   renderBoard();
+  initializeDarkMode();
 }
 
-function renderKeyboard() {
-  keyboardEl.innerHTML = "";
-  const rows = ["QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM"];
+function renderkeyboard() {
+  keyBoardEl.innerHTML = "";
+  const keyRows = ["QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM"];
 
-  rows.forEach((row) => {
-    const rowEl = document.createElement("div");
-    rowEl.className = "key-row";
+  keyRows.forEach((keyRow) => {
+    const keyRowEl = document.createElement("div");
+    keyRowEl.className = "keyboard-row";
 
-    row.split("").forEach((letter) => {
+    keyRow.split("").forEach((letter) => {
       const key = document.createElement("div");
       key.className = "key";
       key.textContent = letter;
       key.addEventListener("click", () => handleKeyClick(letter));
-      rowEl.appendChild(key);
+      keyRowEl.appendChild(key);
     });
-
-    keyboardEl.appendChild(rowEl);
+    keyBoardEl.appendChild(keyRowEl);
   });
 
   const specialKeysRow = document.createElement("div");
-  specialKeysRow.className = "key-row";
-
+  specialKeysRow.className = "keyboard-row";
   const enterKey = document.createElement("div");
-  enterKey.className = "key key-small-text";
+  enterKey.className = "key special-keys";
   enterKey.textContent = "Enter";
   enterKey.addEventListener("click", () => handleKeyClick("Enter"));
   specialKeysRow.appendChild(enterKey);
 
   const backspaceKey = document.createElement("div");
-  backspaceKey.className = "key key-small-text";
+  backspaceKey.className = "key special-keys";
   backspaceKey.textContent = "Back";
   backspaceKey.addEventListener("click", () => handleKeyClick("Back"));
   specialKeysRow.appendChild(backspaceKey);
 
-  keyboardEl.appendChild(specialKeysRow);
+  keyBoardEl.appendChild(specialKeysRow);
 }
 
 function renderBoard() {
   gameBoardEl.innerHTML = "";
-  for (let i = 0; i < maxAttempts; i++) {
+  for (let i = 0; i < numOfAttempts; i++) {
     const row = document.createElement("div");
     row.className = "guess-row";
     for (let j = 0; j < wordLength; j++) {
-      const tile = document.createElement("div");
-      tile.className = "guess-tile";
-      row.appendChild(tile);
+      const cell = document.createElement("div");
+      cell.className = "guess-cell";
+      row.appendChild(cell);
     }
     gameBoardEl.appendChild(row);
   }
@@ -76,7 +77,6 @@ function handleKeyClick(letter) {
     }
   } else if (letter === "Back") {
     currentGuess = currentGuess.slice(0, -1);
-
     updateBoard();
   } else if (currentGuess.length < wordLength) {
     currentGuess += letter;
@@ -88,45 +88,45 @@ function updateBoard() {
   const guessRows = document.querySelectorAll(".guess-row");
   const currentRow = guessRows[attempts];
   if (currentRow) {
-    const tiles = currentRow.querySelectorAll(".guess-tile");
+    const guessCells = currentRow.querySelectorAll(".guess-cell");
     for (let i = 0; i < wordLength; i++) {
-      tiles[i].textContent = currentGuess[i] || "";
+      guessCells[i].textContent = currentGuess[i] || "";
     }
   }
 }
 
 function displayMessage(message, isError = false) {
-  const messageContainer = document.querySelector("#message-container");
+  const messageContainer = document.querySelector(
+    "#on-screen-message-container"
+  );
   messageContainer.textContent = message;
   messageContainer.className = isError ? "message-error" : "message-success";
 }
 
-function provideFeedback() {
+function feedbackOutput() {
   const guessRows = document.querySelectorAll(".guess-row");
-
-  const currentRowIndex = attempts;
-  if (currentRowIndex < 0 || currentRowIndex >= guessRows.length) {
+  const currentRowIdx = attempts;
+  if (currentRowIdx < 0 || currentRowIdx >= guessRows.length) {
     return;
   }
-
-  const currentRow = guessRows[currentRowIndex];
-  const tiles = currentRow.querySelectorAll(".guess-tile");
+  const currentRow = guessRows[currentRowIdx];
+  const tiles = currentRow.querySelectorAll(".guess-cell");
   let isWin = true;
-
   tiles.forEach((tile, index) => {
-    if (currentGuess[index] === selectedWord[index]) {
+    if (currentGuess[index] === currentSelectedWord[index]) {
       tile.style.backgroundColor = "green";
-    } else if (selectedWord.includes(currentGuess[index])) {
+    } else if (currentSelectedWord.includes(currentGuess[index])) {
       tile.style.backgroundColor = "yellow";
-      isWin = false;
     } else {
       tile.style.backgroundColor = "gray";
       isWin = false;
     }
   });
-
   if (isWin) {
-    displayMessage("Congratulations! You've guessed the word!", false);
+    displayMessage(
+      "You have guessed the correct word! Congratulations!",
+      false
+    );
   }
 }
 
@@ -135,52 +135,68 @@ function checkGuess() {
     displayMessage("Please enter a complete guess.", true);
     return;
   }
-
   if (!validWords.includes(currentGuess.toUpperCase())) {
-    displayMessage("Invalid word. Try again.", true);
+    displayMessage("Invalid word guess. Try again.", true);
     currentGuess = "";
     updateBoard();
     return;
   }
-
-  provideFeedback();
-
+  feedbackOutput();
   const guessRows = document.querySelectorAll(".guess-row");
   const currentRow = guessRows[attempts];
-  const tiles = currentRow.querySelectorAll(".guess-tile");
+  const tiles = currentRow.querySelectorAll(".guess-cell");
   let isWin = true;
-
   tiles.forEach((tile, index) => {
-    if (currentGuess[index] !== selectedWord[index]) {
+    if (currentGuess[index] !== currentSelectedWord[index]) {
       isWin = false;
     }
   });
-
   if (isWin) {
-    displayMessage("Congratulations! You've guessed the word!", false);
+    displayMessage(
+      "You have guessed the correct word! Congratulations!",
+      false
+    );
     return;
   }
-
   attempts++;
   currentGuess = "";
-
-  if (attempts >= maxAttempts) {
-    displayMessage(`Game Over! The correct word was ${selectedWord}`, true);
+  if (attempts >= numOfAttempts) {
+    displayMessage(
+      `Game Over! The correct word was ${currentSelectedWord}`,
+      true
+    );
     return;
   }
-
   updateBoard();
 }
 
 function startNewGame() {
   currentGuess = "";
   attempts = 0;
-  selectedWord = validWords[Math.floor(Math.random() * validWords.length)];
+  currentSelectedWord =
+    validWords[Math.floor(Math.random() * validWords.length)];
   renderBoard();
-  renderKeyboard();
+  renderkeyboard();
   displayMessage("");
+}
+
+function initializeDarkMode() {
+  if (localStorage.getItem("dark-mode") === "enabled") {
+    document.body.classList.add("dark-mode");
+    darkModeToggle.checked = true;
+  }
+
+  darkModeToggle.addEventListener("change", () => {
+    if (darkModeToggle.checked) {
+      document.body.classList.add("dark-mode");
+      localStorage.setItem("dark-mode", "enabled");
+    } else {
+      document.body.classList.remove("dark-mode");
+      localStorage.setItem("dark-mode", "disabled");
+    }
+  });
 }
 
 startNewGameBtn.addEventListener("click", startNewGame);
 
-initGame();
+init();

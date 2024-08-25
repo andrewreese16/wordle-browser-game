@@ -9,28 +9,33 @@
     <title>Wordle</title>
   </head>
   <body>
+    <label for="dark-mode-toggle" class="toggle-switch">
+      <input type="checkbox" id="dark-mode-toggle" />
+      <span class="slider"></span>
+      Dark Mode
+    </label>
     <h1>Welcome to Wordle</h1>
     <h3>The rules of the game</h3>
     <ul>
-      <li>You have 6 tries to guess the word</li>
-      <li>A correct letter turns green.</li>
-      <li>A correct letter in the wrong place turns yellow.</li>
-      <li>An incorrect letter turns gray</li>
-      <li>Letters can be used more than once.</li>
-      <li>Every word you enter must be in the word list.</li>
+      <li>Guess the hidden word within 6 attempts.</li>
+      <li>Input your guess and enter to receive feedback.</li>
+      <li>Green tiles indicate correct letters in the correct positions.</li>
+      <li>Yellow tiles indicate correct letters in the wrong positions.</li>
+      <li>Red tiles indicate incorrect letters.</li>
+      <li>Have fun and enjoy playing Wordle!</li>
     </ul>
-    <div id="message-container"></div>
+    <div id="on-screen-message-container"></div>
     <div id="container">
-      <div id="game-board"></div>
-      <div id="keyboard">
-        <div class="key-row">
+      <div id="wordle-game-board"></div>
+      <div id="on-screen-keyboard">
+        <div class="keyboard-row">
           <div class="key">Enter</div>
         </div>
-        <div class="key-row">
+        <div class="keyboard-row">
           <div class="key">Backspace</div>
         </div>
       </div>
-      <button id="startNewGameBtn">Start New Game</button>
+      <button id="start-new-game-btn">Start New Game</button>
     </div>
   </body>
 </html>

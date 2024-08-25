@@ -535,7 +535,6 @@ const validWords = [
   "DIARY",
   "DAISY",
   "DEBIT",
-  "DELV",
   "REMIT",
   "DELTA",
   "DEMON",
@@ -577,5 +576,8 @@ const validWords = [
   "DWELL",
   "DYING",
   "DRYER",
+  "LAUGH",
+  "CATCH",
+  "APPLE",
 ];
 module.exports = validWords;

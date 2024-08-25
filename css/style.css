@@ -1,19 +1,4 @@
-@keyframes bounce {
-  0%,
-  20%,
-  50%,
-  80%,
-  100% {
-    transform: translateY(0) rotate(0deg);
-  }
-  40% {
-    transform: translateY(-20px) rotate(-5deg);
-  }
-  60% {
-    transform: translateY(-10px) rotate(5deg);
-  }
-}
-
+/* Light Mode Styles */
 body {
   font-family: "Arial", sans-serif;
   background: linear-gradient(135deg, #b0bec5, #cfd8dc);
@@ -24,6 +9,7 @@ body {
   min-height: 100vh;
   margin: 0;
   color: #333;
+  transition: background 0.3s, color 0.3s;
 }
 
 #container {
@@ -33,7 +19,7 @@ body {
   gap: 20px;
 }
 
-#game-board {
+#wordle-game-board {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -44,7 +30,7 @@ body {
   gap: 5px;
 }
 
-.guess-tile {
+.guess-cell {
   width: 50px;
   height: 50px;
   background-color: #e0e0e0;
@@ -58,13 +44,13 @@ body {
   border-radius: 8px;
 }
 
-#keyboard {
+#on-screen-keyboard {
   display: flex;
   flex-direction: column;
   gap: 5px;
 }
 
-.key-row {
+.keyboard-row {
   display: flex;
   justify-content: center;
   gap: 5px;
@@ -112,11 +98,11 @@ body {
   color: #4caf50;
 }
 
-.key-small-text {
+.special-keys {
   font-size: 12px;
 }
 
-#startNewGameBtn {
+#start-new-game-btn {
   background-color: #607d8b;
   border: none;
   border-radius: 4px;
@@ -131,11 +117,11 @@ body {
   height: auto;
 }
 
-#startNewGameBtn:hover {
+#start-new-game-btn:hover {
   background-color: #78909c;
 }
 
-#startNewGameBtn:active {
+#start-new-game-btn:active {
   transform: scale(0.95);
 }
 
@@ -159,4 +145,108 @@ ul {
 
 li {
   margin-bottom: 5px;
+}
+
+body.dark-mode {
+  background: linear-gradient(135deg, #263238, #37474f);
+  color: #e0e0e0;
+}
+
+body.dark-mode h1,
+body.dark-mode h3 {
+  color: #e0e0e0;
+}
+
+body.dark-mode ul {
+  color: #e0e0e0;
+}
+
+body.dark-mode .guess-cell {
+  background-color: #424242;
+  border: 2px solid #616161;
+  color: #e0e0e0; /* Ensures text in guess cells is readable */
+}
+
+body.dark-mode .key {
+  background-color: #424242;
+  border: 2px solid #616161;
+  color: #e0e0e0; /* Ensures text on keys is readable */
+}
+
+body.dark-mode .key:hover {
+  background-color: #616161;
+}
+
+body.dark-mode .message-error {
+  color: #f44336;
+}
+
+body.dark-mode .message-success {
+  color: #4caf50;
+}
+
+body.dark-mode #start-new-game-btn {
+  background-color: #455a64;
+  color: #e0e0e0; /* Ensures text on button is readable */
+}
+
+body.dark-mode #start-new-game-btn:hover {
+  background-color: #546e7a;
+}
+
+.toggle-switch {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #333;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: relative;
+  display: inline-block;
+  width: 34px;
+  height: 20px;
+  margin-right: 10px;
+  background-color: #ccc;
+  border-radius: 50px;
+  transition: background-color 0.3s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 12px;
+  width: 12px;
+  border-radius: 50%;
+  background-color: white;
+  left: 4px;
+  bottom: 4px;
+  transition: transform 0.3s;
+}
+
+input:checked + .slider {
+  background-color: #4caf50;
+}
+
+input:checked + .slider:before {
+  transform: translateX(14px);
+}
+
+body.dark-mode .toggle-switch {
+  color: #e0e0e0;
+}
+
+body.dark-mode .slider {
+  background-color: #616161;
+}
+
+body.dark-mode .slider:before {
+  background-color: #e0e0e0;
 }
