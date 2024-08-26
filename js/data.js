@@ -580,4 +580,4 @@ const validWords = [
   "CATCH",
   "APPLE",
 ];
-module.exports = validWords;
+
