@@ -6,6 +6,7 @@ let currentGuess = "";
 let attempts = 0;
 let currentSelectedWord =
   validWords[Math.floor(Math.random() * validWords.length)];
+  console.log(currentSelectedWord)
 /*---------------------------- Cached Elements ----------------------------*/
 const keyBoardEl = document.querySelector("#on-screen-keyboard");
 const gameBoardEl = document.querySelector("#wordle-game-board");
