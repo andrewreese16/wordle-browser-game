@@ -164,13 +164,13 @@ body.dark-mode ul {
 body.dark-mode .guess-cell {
   background-color: #424242;
   border: 2px solid #616161;
-  color: #e0e0e0; /* Ensures text in guess cells is readable */
+  color: #e0e0e0; 
 }
 
 body.dark-mode .key {
   background-color: #424242;
   border: 2px solid #616161;
-  color: #e0e0e0; /* Ensures text on keys is readable */
+  color: #e0e0e0; 
 }
 
 body.dark-mode .key:hover {
@@ -187,7 +187,7 @@ body.dark-mode .message-success {
 
 body.dark-mode #start-new-game-btn {
   background-color: #455a64;
-  color: #e0e0e0; /* Ensures text on button is readable */
+  color: #e0e0e0; 
 }
 
 body.dark-mode #start-new-game-btn:hover {
