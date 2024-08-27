@@ -2,7 +2,7 @@
 
 ![webpage](/assets/Screenshot%202024-08-23%20at%204.12.15 PM.png)
 
-### To play the game [click here]("https://andrewreese16.github.io/wordle-browser-game/)
+### To play the game https://andrewreese16.github.io/wordle-browser-game/
 
 ## Description
 Wordle is a word-guessing game where players attempt to guess a hidden word within a limited number of attempts. Each guess provides feedback on correct letters and their positions, helping players deduce the hidden word.
