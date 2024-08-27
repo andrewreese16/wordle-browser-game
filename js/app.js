@@ -147,7 +147,10 @@ function checkGuess() {
     return;
   }
   if (!validWords.includes(currentGuess.toUpperCase())) {
-    displayMessage("Invalid word guess. Try again.", true);
+    displayMessage(
+      `That word is not part of this dictionary, try again! HINT: ${currentSelectedWord[0]}`,
+      true
+    );
     currentGuess = "";
     updateBoard();
     return;
