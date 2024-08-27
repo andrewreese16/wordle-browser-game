@@ -31,6 +31,7 @@ function renderkeyboard() {
       const key = document.createElement("div");
       key.className = "key";
       key.textContent = letter;
+      key.dataset.key = letter;
       key.addEventListener("click", () => handleKeyClick(letter));
       keyRowEl.appendChild(key);
     });
@@ -42,13 +43,15 @@ function renderkeyboard() {
   const enterKey = document.createElement("div");
   enterKey.className = "key special-keys";
   enterKey.textContent = "Enter";
-  enterKey.addEventListener("click", () => handleKeyClick("Enter"));
+  enterKey.dataset.key = "ENTER";
+  enterKey.addEventListener("click", () => handleKeyClick("ENTER"));
   specialKeysRow.appendChild(enterKey);
 
   const backspaceKey = document.createElement("div");
   backspaceKey.className = "key special-keys";
   backspaceKey.textContent = "Back";
-  backspaceKey.addEventListener("click", () => handleKeyClick("Back"));
+  backspaceKey.dataset.key = "BACKSPACE";
+  backspaceKey.addEventListener("click", () => handleKeyClick("BACKSPACE"));
   specialKeysRow.appendChild(backspaceKey);
 
   keyBoardEl.appendChild(specialKeysRow);
@@ -69,18 +72,26 @@ function renderBoard() {
 }
 
 function handleKeyClick(letter) {
-  if (letter === "Enter") {
+  if (letter === "ENTER") {
     if (currentGuess.length === wordLength) {
       checkGuess();
     } else {
       displayMessage("Please enter a complete guess.");
     }
-  } else if (letter === "Back") {
+  } else if (letter === "BACKSPACE") {
     currentGuess = currentGuess.slice(0, -1);
     updateBoard();
   } else if (currentGuess.length < wordLength) {
     currentGuess += letter;
     updateBoard();
+  }
+
+  const keyElement = document.querySelector(`[data-key="${letter}"]`);
+  if (keyElement) {
+    keyElement.classList.add("pressed");
+    setTimeout(() => {
+      keyElement.classList.remove("pressed");
+    }, 100);
   }
 }
 
@@ -198,5 +209,36 @@ function initializeDarkMode() {
 }
 
 startNewGameBtn.addEventListener("click", startNewGame);
+
+document.addEventListener("keydown", (event) => {
+  const keyPressed = event.key.toUpperCase();
+  if (
+    /^[A-Z]$/.test(keyPressed) ||
+    keyPressed === "ENTER" ||
+    keyPressed === "BACKSPACE"
+  ) {
+    event.preventDefault();
+    handleKeyClick(keyPressed);
+
+    const keyElement = document.querySelector(`[data-key="${keyPressed}"]`);
+    if (keyElement) {
+      keyElement.classList.add("active");
+    }
+  }
+});
+
+document.addEventListener("keyup", (event) => {
+  const keyReleased = event.key.toUpperCase();
+  if (
+    /^[A-Z]$/.test(keyReleased) ||
+    keyReleased === "ENTER" ||
+    keyReleased === "BACKSPACE"
+  ) {
+    const keyElement = document.querySelector(`[data-key="${keyReleased}"]`);
+    if (keyElement) {
+      keyElement.classList.remove("active");
+    }
+  }
+});
 
 init();
