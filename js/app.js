@@ -115,11 +115,11 @@ function displayMessage(message, isError = false) {
   messageContainer.textContent = message;
   messageContainer.className = isError ? "message-error" : "message-success";
 
-  // Clear the message after a short delay (e.g., 3 seconds)
+
   setTimeout(() => {
     messageContainer.textContent = "";
     messageContainer.className = "";
-  }, 3000); // Adjust the delay as needed
+  }, 3000);
 }
 
 function updateKeyboardColors() {
@@ -153,7 +153,6 @@ function feedbackOutput() {
     } else {
       tile.style.backgroundColor = "gray";
       if (!usedKeys[letter]) {
-        // Only set to gray if not already set
         usedKeys[letter] = "gray";
       }
       isWin = false;
@@ -218,10 +217,10 @@ function startNewGame() {
   attempts = 0;
   currentSelectedWord =
     validWords[Math.floor(Math.random() * validWords.length)];
-  usedKeys = {}; // Reset used keys
+  usedKeys = {}; 
   renderBoard();
   renderkeyboard();
-  displayMessage(""); // Clear any previous message
+  displayMessage("");
 }
 
 function initializeDarkMode() {
