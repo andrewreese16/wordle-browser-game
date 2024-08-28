@@ -1,4 +1,4 @@
-const validWords = [
+const valid5LetterWords = [
   "ABBEY",
   "ABOUT",
   "ABOVE",
@@ -488,6 +488,7 @@ const validWords = [
   "LUCKY",
   "LUNCH",
   "LYING",
+  "LITHE",
   "LYNCH",
   "MAGIC",
   "MAJOR",

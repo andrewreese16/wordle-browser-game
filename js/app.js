@@ -2,11 +2,11 @@
 const wordLength = 5;
 const numOfAttempts = 6;
 /*---------------------------- Variables (state) ----------------------------*/
-let currentGuess = "";
+let currentUserGuess = "";
 let attempts = 0;
 let currentSelectedWord =
-  validWords[Math.floor(Math.random() * validWords.length)];
-let usedKeys = {}; // To track used keys and their feedback
+  valid5LetterWords[Math.floor(Math.random() * valid5LetterWords.length)];
+let keysUsed = {};
 
 /*---------------------------- Cached Elements ----------------------------*/
 const keyBoardEl = document.querySelector("#on-screen-keyboard");
@@ -16,12 +16,12 @@ const darkModeToggle = document.getElementById("dark-mode-toggle");
 
 /*---------------------------- Functions ----------------------------*/
 function init() {
-  renderkeyboard();
-  renderBoard();
+  renderOnScreenkeyboard();
+  renderOnScreenBoard();
   initializeDarkMode();
 }
 
-function renderkeyboard() {
+function renderOnScreenkeyboard() {
   keyBoardEl.innerHTML = "";
   const keyRows = ["QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM"];
 
@@ -30,12 +30,12 @@ function renderkeyboard() {
     keyRowEl.className = "keyboard-row";
 
     keyRow.split("").forEach((letter) => {
-      const key = document.createElement("div");
-      key.className = "key";
-      key.textContent = letter;
-      key.dataset.key = letter;
-      key.addEventListener("click", () => handleKeyClick(letter));
-      keyRowEl.appendChild(key);
+      const keyboardKey = document.createElement("div");
+      keyboardKey.className = "key";
+      keyboardKey.textContent = letter;
+      keyboardKey.dataset.key = letter;
+      keyboardKey.addEventListener("click", () => handleKeyClick(letter));
+      keyRowEl.appendChild(keyboardKey);
     });
     keyBoardEl.appendChild(keyRowEl);
   });
@@ -49,42 +49,42 @@ function renderkeyboard() {
   enterKey.addEventListener("click", () => handleKeyClick("ENTER"));
   specialKeysRow.appendChild(enterKey);
 
-  const backspaceKey = document.createElement("div");
-  backspaceKey.className = "key special-keys";
-  backspaceKey.textContent = "Back";
-  backspaceKey.dataset.key = "BACKSPACE";
-  backspaceKey.addEventListener("click", () => handleKeyClick("BACKSPACE"));
-  specialKeysRow.appendChild(backspaceKey);
+  const backKey = document.createElement("div");
+  backKey.className = "key special-keys";
+  backKey.textContent = "Back";
+  backKey.dataset.key = "BACKSPACE";
+  backKey.addEventListener("click", () => handleKeyClick("BACKSPACE"));
+  specialKeysRow.appendChild(backKey);
 
   keyBoardEl.appendChild(specialKeysRow);
 }
 
-function renderBoard() {
+function renderOnScreenBoard() {
   gameBoardEl.innerHTML = "";
   for (let i = 0; i < numOfAttempts; i++) {
-    const row = document.createElement("div");
-    row.className = "guess-row";
-    for (let j = 0; j < wordLength; j++) {
+    const boardRow = document.createElement("div");
+    boardRow.className = "guess-row";
+    for (let l = 0; l < wordLength; l++) {
       const cell = document.createElement("div");
       cell.className = "guess-cell";
-      row.appendChild(cell);
+      boardRow.appendChild(cell);
     }
-    gameBoardEl.appendChild(row);
+    gameBoardEl.appendChild(boardRow);
   }
 }
 
 function handleKeyClick(letter) {
   if (letter === "ENTER") {
-    if (currentGuess.length === wordLength) {
-      checkGuess();
+    if (currentUserGuess.length === wordLength) {
+      checkUserGuess();
     } else {
-      displayMessage("Please enter a complete guess.");
+      displayOnScreenMessage("Please complete your guess.");
     }
   } else if (letter === "BACKSPACE") {
-    currentGuess = currentGuess.slice(0, -1);
+    currentUserGuess = currentUserGuess.slice(0, -1);
     updateBoard();
-  } else if (currentGuess.length < wordLength) {
-    currentGuess += letter;
+  } else if (currentUserGuess.length < wordLength) {
+    currentUserGuess += letter;
     updateBoard();
   }
 
@@ -98,23 +98,22 @@ function handleKeyClick(letter) {
 }
 
 function updateBoard() {
-  const guessRows = document.querySelectorAll(".guess-row");
-  const currentRow = guessRows[attempts];
+  const guessBoardRows = document.querySelectorAll(".guess-row");
+  const currentRow = guessBoardRows[attempts];
   if (currentRow) {
     const guessCells = currentRow.querySelectorAll(".guess-cell");
     for (let i = 0; i < wordLength; i++) {
-      guessCells[i].textContent = currentGuess[i] || "";
+      guessCells[i].textContent = currentUserGuess[i] || "";
     }
   }
 }
 
-function displayMessage(message, isError = false) {
+function displayOnScreenMessage(message, isError = false) {
   const messageContainer = document.querySelector(
     "#on-screen-message-container"
   );
   messageContainer.textContent = message;
   messageContainer.className = isError ? "message-error" : "message-success";
-
 
   setTimeout(() => {
     messageContainer.textContent = "";
@@ -122,88 +121,85 @@ function displayMessage(message, isError = false) {
   }, 3000);
 }
 
-function updateKeyboardColors() {
-  Object.keys(usedKeys).forEach((key) => {
+function changeKeyboardColors() {
+  Object.keys(keysUsed).forEach((key) => {
     const keyElement = document.querySelector(`[data-key="${key}"]`);
     if (keyElement) {
-      const color = usedKeys[key];
+      const color = keysUsed[key];
       keyElement.style.backgroundColor = color;
     }
   });
 }
 
 function feedbackOutput() {
-  const guessRows = document.querySelectorAll(".guess-row");
+  const guessBoardRows = document.querySelectorAll(".guess-row");
   const currentRowIdx = attempts;
-  if (currentRowIdx < 0 || currentRowIdx >= guessRows.length) {
+  if (currentRowIdx < 0 || currentRowIdx >= guessBoardRows.length) {
     return;
   }
-  const currentRow = guessRows[currentRowIdx];
-  const tiles = currentRow.querySelectorAll(".guess-cell");
-  let isWin = true;
+  const currentRow = guessBoardRows[currentRowIdx];
+  const gameBoardtiles = currentRow.querySelectorAll(".guess-cell");
+  let winnerFound = true;
 
-  tiles.forEach((tile, index) => {
-    const letter = currentGuess[index];
+  gameBoardtiles.forEach((tile, index) => {
+    const letter = currentUserGuess[index];
     if (letter === currentSelectedWord[index]) {
       tile.style.backgroundColor = "green";
-      usedKeys[letter] = "green";
+      keysUsed[letter] = "green";
     } else if (currentSelectedWord.includes(letter)) {
       tile.style.backgroundColor = "#ffc40c";
-      usedKeys[letter] = "#ffc40c";
+      keysUsed[letter] = "#ffc40c";
     } else {
       tile.style.backgroundColor = "gray";
-      if (!usedKeys[letter]) {
-        usedKeys[letter] = "gray";
+      if (!keysUsed[letter]) {
+        keysUsed[letter] = "gray";
       }
-      isWin = false;
+      winnerFound = false;
     }
   });
 
-  updateKeyboardColors();
+  changeKeyboardColors();
 
-  if (isWin) {
-    displayMessage(
-      "You have guessed the correct word! Congratulations!",
-      false
-    );
+  if (winnerFound) {
+    displayOnScreenMessage("Great Job you got it right!", false);
   }
 }
 
-function checkGuess() {
-  if (currentGuess.length !== wordLength) {
-    displayMessage("Please enter a complete guess.", true);
+function checkUserGuess() {
+  if (currentUserGuess.length !== wordLength) {
+    displayOnScreenMessage("Please enter a complete guess.", true);
     return;
   }
-  if (!validWords.includes(currentGuess.toUpperCase())) {
-    displayMessage(
+  if (!valid5LetterWords.includes(currentUserGuess.toUpperCase())) {
+    displayOnScreenMessage(
       `That word is not part of this dictionary, try again! HINT: ${currentSelectedWord[0]}`,
       true
     );
-    currentGuess = "";
+    currentUserGuess = "";
     updateBoard();
     return;
   }
   feedbackOutput();
-  const guessRows = document.querySelectorAll(".guess-row");
-  const currentRow = guessRows[attempts];
-  const tiles = currentRow.querySelectorAll(".guess-cell");
-  let isWin = true;
-  tiles.forEach((tile, index) => {
-    if (currentGuess[index] !== currentSelectedWord[index]) {
-      isWin = false;
+  const guessBoardRows = document.querySelectorAll(".guess-row");
+  const currentRow = guessBoardRows[attempts];
+  const gameBoardtiles = currentRow.querySelectorAll(".guess-cell");
+  let winnerFound = true;
+  gameBoardtiles.forEach((tile, index) => {
+    if (currentUserGuess[index] !== currentSelectedWord[index]) {
+      winnerFound = false;
     }
   });
-  if (isWin) {
-    displayMessage(
+  if (winnerFound) {
+    displayOnScreenMessage(
       "You have guessed the correct word! Congratulations!",
       false
     );
     return;
   }
   attempts++;
-  currentGuess = "";
+  currentUserGuess = "";
   if (attempts >= numOfAttempts) {
-    displayMessage(
+    displayOnScreenMessage(
       `Game Over! The correct word was ${currentSelectedWord}`,
       true
     );
@@ -213,14 +209,14 @@ function checkGuess() {
 }
 
 function startNewGame() {
-  currentGuess = "";
+  currentUserGuess = "";
   attempts = 0;
   currentSelectedWord =
-    validWords[Math.floor(Math.random() * validWords.length)];
-  usedKeys = {}; 
-  renderBoard();
-  renderkeyboard();
-  displayMessage("");
+    valid5LetterWords[Math.floor(Math.random() * valid5LetterWords.length)];
+  keysUsed = {};
+  renderOnScreenBoard();
+  renderOnScreenkeyboard();
+  displayOnScreenMessage("");
 }
 
 function initializeDarkMode() {
