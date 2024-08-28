@@ -18,6 +18,9 @@ Wordle is a word-guessing game where players attempt to guess a hidden word with
 Interactive gameplay through JavaScript event handling.
 Feedback mechanism for correct letters and their positions.
 Dark mode toggle for enhanced user experience.
+## Future Plans
+- Add an API for the dictionary 
+- Add more animations
 ## How to Play
 1. Guess the hidden word within 6 attempts.
 2. Input your guess and submit to receive feedback.
