@@ -6,6 +6,8 @@ let currentGuess = "";
 let attempts = 0;
 let currentSelectedWord =
   validWords[Math.floor(Math.random() * validWords.length)];
+let usedKeys = {}; // To track used keys and their feedback
+
 /*---------------------------- Cached Elements ----------------------------*/
 const keyBoardEl = document.querySelector("#on-screen-keyboard");
 const gameBoardEl = document.querySelector("#wordle-game-board");
@@ -112,6 +114,22 @@ function displayMessage(message, isError = false) {
   );
   messageContainer.textContent = message;
   messageContainer.className = isError ? "message-error" : "message-success";
+
+  // Clear the message after a short delay (e.g., 3 seconds)
+  setTimeout(() => {
+    messageContainer.textContent = "";
+    messageContainer.className = "";
+  }, 3000); // Adjust the delay as needed
+}
+
+function updateKeyboardColors() {
+  Object.keys(usedKeys).forEach((key) => {
+    const keyElement = document.querySelector(`[data-key="${key}"]`);
+    if (keyElement) {
+      const color = usedKeys[key];
+      keyElement.style.backgroundColor = color;
+    }
+  });
 }
 
 function feedbackOutput() {
@@ -123,16 +141,27 @@ function feedbackOutput() {
   const currentRow = guessRows[currentRowIdx];
   const tiles = currentRow.querySelectorAll(".guess-cell");
   let isWin = true;
+
   tiles.forEach((tile, index) => {
-    if (currentGuess[index] === currentSelectedWord[index]) {
+    const letter = currentGuess[index];
+    if (letter === currentSelectedWord[index]) {
       tile.style.backgroundColor = "green";
-    } else if (currentSelectedWord.includes(currentGuess[index])) {
-      tile.style.backgroundColor = "#ffc40c ";
+      usedKeys[letter] = "green";
+    } else if (currentSelectedWord.includes(letter)) {
+      tile.style.backgroundColor = "#ffc40c";
+      usedKeys[letter] = "#ffc40c";
     } else {
       tile.style.backgroundColor = "gray";
+      if (!usedKeys[letter]) {
+        // Only set to gray if not already set
+        usedKeys[letter] = "gray";
+      }
       isWin = false;
     }
   });
+
+  updateKeyboardColors();
+
   if (isWin) {
     displayMessage(
       "You have guessed the correct word! Congratulations!",
@@ -189,9 +218,10 @@ function startNewGame() {
   attempts = 0;
   currentSelectedWord =
     validWords[Math.floor(Math.random() * validWords.length)];
+  usedKeys = {}; // Reset used keys
   renderBoard();
   renderkeyboard();
-  displayMessage("");
+  displayMessage(""); // Clear any previous message
 }
 
 function initializeDarkMode() {
