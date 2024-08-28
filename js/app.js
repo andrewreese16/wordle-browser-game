@@ -190,10 +190,7 @@ function checkUserGuess() {
     }
   });
   if (winnerFound) {
-    displayOnScreenMessage(
-      "You have guessed the correct word! Congratulations!",
-      false
-    );
+    displayOnScreenMessage("Great Job you got it right!", false);
     return;
   }
   attempts++;
