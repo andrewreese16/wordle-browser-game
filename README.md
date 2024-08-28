@@ -4,6 +4,8 @@
 
 ### To play the game https://andrewreese16.github.io/wordle-browser-game/
 
+**To view user stories and all planning materials please see the Planning-Materials.md**
+
 ## Description
 Wordle is a word-guessing game where players attempt to guess a hidden word within a limited number of attempts. Each guess provides feedback on correct letters and their positions, helping players deduce the hidden word.
 
