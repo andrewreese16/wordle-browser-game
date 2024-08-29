@@ -61,10 +61,10 @@ function renderOnScreenkeyboard() {
 
 function renderOnScreenBoard() {
   gameBoardEl.innerHTML = "";
-  for (let i = 0; i < numOfAttempts; i++) {
+  for (let index = 0; index < numOfAttempts; index++) {
     const boardRow = document.createElement("div");
     boardRow.className = "guess-row";
-    for (let l = 0; l < wordLength; l++) {
+    for (let i = 0; i < wordLength; i++) {
       const cell = document.createElement("div");
       cell.className = "guess-cell";
       boardRow.appendChild(cell);
@@ -102,8 +102,8 @@ function updateBoard() {
   const currentRow = guessBoardRows[attempts];
   if (currentRow) {
     const guessCells = currentRow.querySelectorAll(".guess-cell");
-    for (let i = 0; i < wordLength; i++) {
-      guessCells[i].textContent = currentUserGuess[i] || "";
+    for (let number = 0; number < wordLength; number++) {
+      guessCells[number].textContent = currentUserGuess[number] || "";
     }
   }
 }
