@@ -1,14 +1,18 @@
 # Wordle Game
 
-![webpage](/assets/Screenshot%202024-08-23%20at%204.12.15 PM.png)
+![webpage](/assets/Screenshot%202024-08-29%20at%2010.34.21 AM.png)
 
-### To play the game https://andrewreese16.github.io/wordle-browser-game/
+### To play the game: https://andrewreese16.github.io/wordle-browser-game/
 
-**To view user stories and all planning materials please see the Planning-Materials.md**
+### [User stories and all planning materials](Planning-Materials.md)
 
 ## Description
 
-Wordle is a word-guessing game where players attempt to guess a hidden word within a limited number of attempts. Each guess provides feedback on correct letters and their positions, helping players deduce the hidden word.
+- Wordle is a word-guessing game where players attempt to guess a hidden word within a limited number of attempts. Each guess provides feedback on correct letters and their positions, helping players deduce the hidden word.
+
+## Why I chose Wordle
+
+- I chose this game is becasue Wordle is a household name, and took the internet by storm in 2021. I felt it would be fun and challenging to remake this brain-thinking game.
 
 ## Technologies Used
 
@@ -19,9 +23,9 @@ Wordle is a word-guessing game where players attempt to guess a hidden word with
 ## Features
 
 - Responsive design using CSS for optimal display on different devices.
-  Interactive gameplay through JavaScript event handling.
-  Feedback mechanism for correct letters and their positions.
-  Dark mode toggle for enhanced user experience.
+- Interactive gameplay through JavaScript event handling.
+- Feedback mechanism for correct letters and their positions.
+- Dark mode toggle for enhanced user experience.
 
 ## Future Plans
 
@@ -37,7 +41,10 @@ Wordle is a word-guessing game where players attempt to guess a hidden word with
 5. Red tiles indicate incorrect letters.
 6. Have fun and enjoy playing Wordle!
 
+## Tools and Assistance
+
+- This project was primarily developed by Andrew Reese. AI assistance was utilized for debugging techniques using ChatGPT.
+
 ## Credits
 
-- Created by Andrew Reese
 - Inspiration from the original Wordle game by The New York Times Company.
