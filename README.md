@@ -43,7 +43,7 @@
 
 ## Tools and Assistance
 
-- This project was primarily developed by Andrew Reese. AI assistance was utilized for debugging techniques using ChatGPT.
+- This project was primarily developed by Andrew Reese. AI assistance was utilized for debugging using ChatGPT.
 
 ## Credits
 
